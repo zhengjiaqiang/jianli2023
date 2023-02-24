@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{$ptitle}</title>
+		<include file="Common:edittop" />
+	</head>
+
+	<body class="diy-css">
+		<form id="edit-form-area" name="edit-form-area" class="form-horizontal mcms" role="form" method="post" action="__SELF__">
+			<?php if(!isset($info) || ! is_array($info))$info=array();?>
+			<input type="hidden" name="id" value="{$id}" />
+			<input type="hidden" name="pid" value="<?php echo get_array_val($info,'id') ?>" />
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="space-4"></div>
+					<if condition="($pid gt 1)">
+						<div class="form-group txt-span">
+							<label>用户名 </label>
+							<span class="text-danger"><strong>{$info.name}</strong></span>
+						</div>
+					<else />
+						<div class="form-group txt-span">
+							<label>用户名 </label>
+							<?php html::text('name',get_array_val($info,'name'),array('style'=>'width:200px;','placeholder'=>'用户名')); ?>
+						</div>
+						<div class="form-group txt-span">
+							<label>登录密码 </label>
+							<?php html::text('password','pwd123456',array('style'=>'width:200px;','placeholder'=>'登录密码')); ?>
+						</div>
+					</if>
+					<if condition="$depid eq 0">
+						<div class="space-4"></div>
+						<div class="form-group txt-span">
+							<label>权限类型 </label>
+							<select name="isdep" id="isdep">
+							<option value="-1" <if condition="$info['isdep'] eq 0">selected="selected"</if>>--请选择权限--</option>
+							<option value="0">系统管理员</option>
+							<foreach name="dlist" item="v" key="k">
+							   <option value="{$k}" <if condition="$info['isdep'] eq $k">selected="selected"</if>>{$v}</option>
+							</foreach>
+							</select>
+							
+						</div>
+						<else/> <input type="hidden" readonly="readonly"  name="isdep" value="{$depid}"/>
+					</if>
+					<div class="space-4"></div>
+					<div class="form-group txt-span">
+						<label>角色 </label>
+						<if condition="empty($info)">
+							<?php html::select('rid',$rolelist,get_array_val($info,'rid'),array('style'=>'width:200px;'),null,'--请选择权限类型--');?>
+						<else/><?php html::select('rid',$urlist,get_array_val($info,'rid'),array('style'=>'width:200px;'),null);?>
+						</if>
+					
+					</div>
+					<div class="space-4"></div>
+					<div class="form-group txt-span">
+						<label>姓名 </label>
+						<?php html::text('nickname',get_array_val($info,'nickname'),array('style'=>'width:200px;','placeholder'=>'姓名')); ?>
+					</div>
+				</div>
+				
+				<div class="col-sm-6" style="line-height:28px;">
+					<if condition="($info['id'] gt 0)">
+						<a href="javascript:void(0);" class="layer-open-cool" data-type="zc"  shref="__CONTROLLER__/photo?id={$info.id}" data-w="700px" data-h="550px" style="text-align: center;display:block;width:120px;"><img style="width:120px;" src="{$filedir}<?php echo ($info['id'].substr(md5($info['id']),8,16))  ?>.jpg?" /><br/>点击修改头像</a>
+					</if>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="space-4"></div>
+					<div class="form-group txt-span">
+						<label> 状态 </label>
+						<?php html::select('status',array('1'=>'启用','0'=>'禁用'),get_array_val($info,'status'),array('style'=>'width:200px;'));?>
+						<span class="text-danger"> *只有启用状态可以登录</span>
+						
+					</div>
+					<div class="space-4"></div>
+					<div class="form-group txt-span">
+						<label> 备注 </label>
+						<div class="col-sm-12" style="padding-left:84px;">
+							<?php html::textarea('remark',get_array_val($info,'remark'),array('style'=>'width:568px','rows'=>'4','placeholder'=>'备注')); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix form-actions">
+				<div class="col-md-9"> 
+				<if condition="($update And $info['id'] gt 0) || ($add And !isset($info['id']))">
+					<button class="btn btn-info" type="submit" role="submit" data-loading-text="Loading..."><i class="icon-ok bigger-110"></i>提交 </button>
+				</if>	
+					&nbsp; &nbsp; &nbsp;
+					<button class="btn" type="reset"><i class="icon-undo bigger-110"></i> 重置 </button>
+				</div>
+			</div>
+		</form>
+		<include file="Common:editfooter" />
+		<script>
+			$(function(){
+				MCMS.setTitle([{'title':'<?php echo $ptitle ?>管理','url':'__CONTROLLER__/index'},{'title':'<?php echo $ptitle;if(empty($id)) echo '添加'; else echo'编辑';  ?>'}]);
+				MCMS.validate("#edit-form-area",{
+					name: { required: true,chrnum:true,rangelength:[6,16]},
+					password: { required: true,rangelength:[8,16],password:true},
+					nickname: { required: true},
+					isdep : {required:true,min:0},
+					rid : {required:true,min:0}
+
+				});
+				$("#edit-form-area").submit(function(){
+					MCMS.commajaxfun(this);
+					return false;
+				});
+				$("#isdep").on('change',function(){
+					var val=$(this).val(),html='';
+					if(val < 0) return false;
+					$.post('/systemV/admin/rolelist',{'depid':val},function(_data){
+						for(var i=0;i<_data.length;i++){
+							html+='<option value="'+_data[i].id+'">'+_data[i].name+'</option>';
+						}
+						$("#rid").html(html);
+					},'JSON');
+				});
+				var temid =1;
+				$(".layer-open-cool").on('click',function(){
+					var $this = $(this);
+					parent.layer.isuplaod = false;
+					window.layerid = parent.layer.open({
+						type: 2,
+						title: $this.text(),
+						closeBtn: 1, //不显示关闭按钮
+						shade: 0.4,
+						shadeClose: false,
+						area: [$this.data('w'), $this.data('h')],
+						content: $this.attr('shref'),
+						maxmin: false,
+						end:function(){
+							if($this.data('type') == 'tem'){
+								if(parent.layer.isuplaod == true){
+									var img = $this.find('img');
+									img.attr('src','{$filedir}'+$('[name=filename]').val()+'.jpg');
+								}
+							}else{
+								if(parent.layer.isuplaod == true){
+									var img = $this.find('img');temid++;
+									img.attr('src',img.attr('src')+temid);
+								}
+							}
+						}
+					});
+					return false;
+				});
+			});
+		</script>
+	</body>
+</html>

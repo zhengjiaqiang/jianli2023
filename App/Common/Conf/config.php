@@ -1,0 +1,43 @@
+<?php
+return array(
+	//'配置项'=>'配置值'
+	'DEFAULT_MODULE'       =>    'Icenter',  // 默认模块
+	'MODULE_ALLOW_LIST'    =>    array('systemv','Api','ResumeLogin','User','Icenter'),
+	'URL_CASE_INSENSITIVE'  =>  true,  
+	'URL_MODEL'          => '2',
+	'URL_HTML_SUFFIX'=>'shtml',
+	/* 数据库设置 */
+	//'REDIS_AUTH'=>'mealone365!',
+	'DB_TYPE' => 'mysql', // 数据库类型
+	//'DB_HOST' => '192.168.13.217', // 服务器地址
+	//'DB_NAME' => 'jianli', // 数据库名
+	//'DB_USER' => 'jianli', // 用户名
+	//'DB_PWD' => 'jianli!@#$888', // 密码
+    //本地
+    'DB_HOST' => 'localhost', // 服务器地址
+    'DB_NAME' => 'jianli', // 数据库名
+    'DB_USER' => 'root', // 用户名
+    'DB_PWD' => '123456', // 密码
+
+
+	'URL_CASE_INSENSITIVE'  =>  true,   // 默认false 表示URL区分大小写 true则表示不区分大小写
+	'DB_PORT' => '3306', // 端口
+	'DB_PREFIX' => 'hh_', // 数据库表前缀
+	'DB_DEBUG' => true,
+	'TMPL_TEMPLATE_SUFFIX'  =>  '.php',     // 默认模板文件后缀
+	'COOKIE_PREFIX' => 'ViZL_', //Cookie前缀
+	'DATA_CACHE_PREFIX' => 'ViZL_', // 缓存前缀
+	'DATA_BACKUP_PATH'=>'./backup/',
+	'HOME_SKIN_URL'=>'./App/Home/View/',
+	'HTML_FILE_SUFFIX' =>'.shtml',
+	'MAIL_SMTPAUTH' =>TRUE, //启用smtp认证
+	'MAIL_CHARSET' =>'utf-8',//设置邮件编码
+	'MAIL_ISHTML' =>TRUE, // 是否HTML格式邮件
+	'LOG_LEVEL'=>'',
+	'TOKEN_ON' => true,
+	'TOKEN_NAME' => '__hash__',
+	'TOKEN_TYPE'=>'md5',
+	'TOKEN_RESET'=>true,
+);
+
+

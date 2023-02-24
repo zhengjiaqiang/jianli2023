@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keyword" content="">
+
+    <title>登陆</title>
+	<link href="/static/icenter/assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/static/icenter/assets/css/font-awesome.min.css" />
+
+	<!--[if lt IE 9]>
+		<script src="/static/icenter/assets/js/html5shiv.js"></script>
+		<script src="/static/icenter/assets/js/respond.min.js"></script>
+	<![endif]-->
+    <style>
+		body{
+			background:#302d48;
+		}
+		input[type="text"], 
+		input[type="password"]{
+			height: 45px;
+			margin: 0;
+			padding: 0 20px;
+			vertical-align: middle;
+			background: #fff;
+			border: 3px solid #fff;
+			font-family: 'Roboto', sans-serif;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 45px;
+			-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+			-moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+			color:#333;
+		}
+
+
+		input[type="text"]:focus, 
+		input[type="password"]:focus{
+			outline: 0;
+			background: #fff;
+			border: 3px solid #fff;
+			-moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+		}
+
+input[type="text"]:-moz-placeholder, input[type="password"]:-moz-placeholder{ color: #333; }
+
+button.btn,button.btn:hover {
+	height: 45px;
+    margin: 0;
+    padding: 0 20px;
+    vertical-align: middle;
+    background: #de615e;
+    border: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 45px;
+    color: #fff;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+    text-shadow: none;
+    -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+    -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
+}
+
+h3 {
+	font-size: 22px;
+}
+
+.inner-bg {
+    padding-top: 80px;
+}
+
+.form-box {
+	margin-top: 35px;
+	position: relative;
+	width:420px;
+	margin:35px auto;
+}
+
+.form-top {
+	overflow: hidden;
+	padding: 0 25px;
+	background: #444;
+	background: rgba(0, 0, 0, 0.35);
+	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
+	text-align: left;
+}
+
+.form-top-left {
+	float: left;
+	width: 75%;
+	padding-top: 25px;
+}
+
+.form-top-left h3 { margin-top: 0; color: #fff; }
+.form-top-left p { opacity: 0.8; color: #fff; }
+
+.form-top-right {
+	float: left;
+	width: 25%;
+	padding-top: 5px;
+	font-size: 66px;
+	color: #fff;
+	line-height: 100px;
+	text-align: right;
+	opacity: 0.3;
+}
+
+.form-bottom {
+	padding: 15px 25px 15px 25px;
+	background: #444;
+	background: rgba(0, 0, 0, 0.3);
+	-moz-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; border-radius: 0 0 4px 4px;
+	text-align: left;
+}
+
+.form-bottom form button.btn {
+	width: 100%;
+}
+
+/***** Media queries *****/
+
+@media (max-width: 767px) {
+	.inner-bg { padding: 60px 0 110px 0; }
+}
+		.error-box{
+			position: absolute;
+			left:0;right:0;
+			background:#c00;
+			color:#fff;
+			text-align:center;
+			padding:12px;
+			display:none;
+		}
+		.code-group .code{
+			width:65%;
+			float:left;
+			-moz-border-radius: 4px 0 0 4px; -webkit-border-radius: 4px 0 0 4px; border-radius: 4px 0 0 4px;
+		}
+		.code-group img{
+			width:35%;
+			height:45px;
+		}
+		.input-group-addon{font-size:16px;}
+    </style>
+  </head>
+  <body>
+	  	<div class="error-box"></div>
+        <!-- Top content -->
+        <div class="top-content">
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>欢迎您的登陆</h3>
+                            		<p>请输入您的账号和密码:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="icon icon-lock"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+			                    <form method="post" class="login-form" name="loginform">
+									<div class="form-group">
+										<label class="sr-only" for="username">您的账号</label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-user"></i></span>
+											<input  name="username" placeholder="您的账号" class="username form-control " type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="sr-only" for="password">您的密码</label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-key"></i></span>
+											<input  type="password"  name="password" placeholder="您的密码" class="password form-control ">
+										</div>
+									</div>
+										
+			                        <button type="submit" class="btn">登&nbsp;&nbsp;&nbsp;&nbsp;陆</button>
+			                    </form>
+		                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <script src="/static/common/jquery1.9.1.js"></script>
+      <script src="/static/common/jquery.backstretch.min.js"></script>
+      <script>
+        jQuery(document).ready(function() {
+            // $.backstretch([ "/tem/2.jpg" , "/tem/3.jpg" , "/tem/1.jpg" ], {duration: 3000, fade: 750});
+		
+			$(".code-group .code-box").on('click','img,a',function(){
+					yzmFun();
+			});
+			prevVal = null,
+			isbind =false,
+			yzmFun = function(){
+				$('#yzm').attr('src',$('#yzm').attr('src')+new Date().getTime());
+			},
+			showerror = function(msg){
+				var $t = $('.error-box');	
+				$t.html(msg).slideDown('normal');
+				$('html,body').animate({scrollTop: '0px'}, 100);
+				setTimeout(function(){
+					$t.slideUp('normal');
+				},2500);
+			}
+			// $(".send").on('click',function(){
+			// 	var _mobile=$(":input[name='mobile']").val();
+			// 	if(!(/^1[3|4|5|8|7][0-9]\d{4,8}$/.test(_mobile))){ 
+			// 		showerror('当前手机号码错误');
+			// 		return false; 
+			// 	}
+			// 	$.post('/login/index/send',{'m':_mobile},function(_data){
+			// 		showerror(_data.info);
+			// 	},'JSON');
+			// });
+			$('[name="loginform"]').submit(function(){
+				var $this = $(this),
+					username = $this.find('[name="username"]').val(),
+					pwd = $this.find('[name="password"]').val(),
+					yzm = $this.find('[name="code"]').val(),
+					mobile=$this.find('[name="mobile"]').val()
+				if(username.length < 5 || username.length > 16 || pwd.length<6){
+					showerror('请输入正确的账号或密码！');return false;
+				}
+				// if(!(/^1[3|4|5|8|7][0-9]\d{4,8}$/.test(mobile))){ 
+				// 	showerror('请填写正确的手机号码');
+				// 	return false; 
+				// }
+				$.post($this.attr("action"), $this.serialize(), function(data){
+					if(data.status){
+						window.location.href = data.url;
+					}else {
+						if(data.info == 'yzm'){yzmFun(); showerror('请输入正确的验证码！');}
+						else {showerror(data.info);yzmFun();}
+					}
+				}, "json");
+				return false;
+			});
+			
+        });
+	</script>
+  </body>
+</html>

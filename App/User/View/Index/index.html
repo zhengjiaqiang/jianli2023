@@ -1,0 +1,109 @@
+<include file="Common:header"/>
+<script type="text/javascript"> 
+  $(document).ready(function(){
+	  $("#a1").click(function(){
+			$(this).toggleClass("shou");
+		    $("#anniu1").toggleClass("on");
+		});
+	  $("#a2").click(function(){
+			$(this).toggleClass("shou");
+		    $("#anniu2").toggleClass("on");
+		});
+  });
+</script>
+<body>
+	<header>
+	    <!-- <div class="header">
+	        <div class="logo"></div>
+	        <div class="search">
+	              <input type="text" name="keyword" id="keyword" placeholder="请输入您想要搜索的职位名称" value="" readonly="true">
+	              <input type="image" name="imageField" id="imageField" src="images/search_bn.jpg">
+	        </div>
+	    </div> -->
+		<script>
+		function search(){
+			var queryKey = $("#keyword").val();
+			if($.trim(queryKey) == ""){
+				alert("请输入搜索关键字!");
+				return;
+			}
+			var reg=/^[\u2E80-\u9FFF]+$/;
+			if(!reg.test(queryKey)){
+				alert("只能输入中文进行搜索");
+				return;
+			}
+			location.href = encodeURI(encodeURI("search.jsp?queryKey=" + queryKey));
+		}
+		$(function() {
+			$("#keyword").keydown(function(event) {
+				if (event.keyCode == 13) {
+					search();
+				}
+			});
+		})
+		</script>
+	</header>
+	<!--头部结束-->
+	<!-- <div class="banner" id="banner"></div> -->
+	<div id="content">
+		<div class="jslogin">
+			<div class="registertitle">
+				<h1>人事招聘服务平台</h1>
+				<!-- <h2>— 为市民提供使用共享的智慧服务 —</h2> -->
+			</div>
+			<form  class="layui-form">
+			<div class="loginmain">
+				<div class="login_div">
+					<label>账号登录</label>
+					<div class="login_user">
+						<input type="text" class="user" name="mobile" id="mobile" lay-verify="required" placeholder="用户名、手机号">
+						<span><i class="icon iconfont">&#xe503;</i></span>
+					</div>
+				</div>
+				<div class="login_div" >
+					<label>密　　码</label>
+					<div class="login_user">
+						<input type="password" class="user" name="password" id="password" lay-verify="required"  placeholder="请输入6-20位字符密码">
+						<span><i class="icon iconfont">&#xe635;</i></span>
+					</div>
+				</div>
+				<div class="login_div login_divone" >
+					<label></label>
+					<div class="login_user">
+						<a href="javascript:;" lay-submit lay-filter="login"  class="login">登 陆</a>
+					</div>
+				</div>
+				<div class="login_div login_div3" >
+					<label></label>
+					<div class="login_user">
+						<a href="/user/login/register" class="free">免费注册</a>|<a href="">找回密码</a>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	<div class="tc experience" style="display: block;">为了获得更好的用户体验，请在电脑端使用火狐、谷歌、 浏览器填写简历。<em class="close"></em></div>
+	<footer> </footer>
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['layer','form'], function(){
+    var form = layui.form,layer=layui.layer;
+    form.on('submit(login)', function(data){
+            $.post('/user/login/ulogin',data.field,function(_data){
+                if(_data.status == 1){
+                    layer.msg(_data.info,{shift:-1,time:2000,icon:1},function(){
+                        location.href="/icenter/index/";
+                    });
+                }else  layer.alert(_data.info,{
+                        title:'登录失败错误信息',
+                        icon:2
+                    });
+                return false;
+            },'JSON');
+            return false;
+        });
+    });
+    </script>
+</body>
+</html>

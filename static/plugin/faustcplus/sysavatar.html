@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>头像上传</title>
+<style type="text/css">
+*{margin: 0; padding: 0;}
+body{width: 650px; height: 460px; overflow: hidden; padding: 10px 0;}
+</style>
+</head>
+<body>
+<div id="altContent"></div>
+<script type="text/javascript" src="/content/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/u/res/js/gl.js"></script>
+<script type="text/javascript" src="/plugin/FaustCplus/swfobject.js"></script>
+<script type="text/javascript">
+var index = parent.layer.getFrameIndex(window.name);
+var pSize = get('size');
+var img = get('img');
+img = img.replace(/@/, '#');
+var input = get('input');
+var width = get('width');
+var height = get('height');
+var defaultimg = get('default');
+
+function uploadevent(status){
+	if(parseInt(status) == -1)  parent.layer.close(index);
+    status = $.parseJSON(status);
+    var s = status.status + '';
+    var url = status.url;
+    switch(s){
+        case '1':
+        	$(img, window.parent.document).attr('src', url).width(width).height(height).parent().show().parent().addClass('curr');
+        	$("input[name='"+input+"']", window.parent.document).val(url);
+            parent.layer.close(index);
+        	break;
+
+        case '-1':
+            parent.layer.alert('头像上传失败，请稍后再试', 8, function() {});
+            break;
+        default:
+            alert(typeof(status) + ' ' + status);
+    } 
+}
+
+var flashvars = {
+    "jsfunc":"uploadevent",
+    "imgUrl": defaultimg,
+    "pid":"75642723",
+    "uploadSrc":true,
+    "showBrow":true,
+    "showCame":true,
+    "uploadUrl":"/service/file/uploadavatar/",
+    "pSize": pSize
+};
+
+var params = {
+    menu: "false",
+    scale: "noScale",
+    allowFullscreen: "true",
+    allowScriptAccess: "always",
+    wmode:"transparent",
+    bgcolor: "#FFFFFF"
+};
+
+var attributes = {id:"FaustCplus"};
+swfobject.embedSWF("/plugin/FaustCplus/FaustCplus.swf", "altContent", "650", "460", "9.0.0", "/plugin/FaustCplus/expressInstall.swf", flashvars, params, attributes);
+
+</script>
+</body>
+</html>

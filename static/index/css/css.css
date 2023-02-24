@@ -1,0 +1,143 @@
+.layui-form-item2 .layui-form-label{
+	width: 230px;
+	text-align: left;
+}
+
+.layui-form-item2 .layui-input-block{
+	margin-left: 260px;
+}
+
+.layui-container{width:100% !important;}
+.table-list {
+	width: 100%;
+}
+.table-list td,.table-list th{
+	border: 1px solid #c9cadd;
+	min-width: 35px;
+    height: 20px;
+    margin-top: 5px;
+    padding: 12px;
+}
+.table-list-border td,.table-list-border th{
+    border:none;
+}
+.table-list-border td{width: 50%;}
+.layui-span {
+    display: block;
+    /*width: 25px;
+    height: 25px;*/
+    width: 70px;
+    height: 26px;
+    text-align: center;
+    line-height: 26px;
+    background: #F60;
+    color: #fff;
+    margin: 10px auto;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 13px;
+}
+.layui-span i {
+    font-size: 26px;
+    color: #f60;
+}
+.layui-span2 {
+    display: block;
+    /*width: 25px;
+    height: 25px;*/
+    width: 70px;
+    height: 26px;
+    text-align: center;
+    line-height: 26px;
+    background: #F60;
+    color: #fff;
+    margin: 10px auto;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 13px;
+}
+.layui-span2 i {
+    font-size: 26px;
+    color: #f60;
+}
+/*.layui-span2 {
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin: 10px auto;
+    cursor: pointer;
+}
+.layui-span2 i {
+    font-size: 26px;
+}*/
+/*.table-list .layui-input-block{margin-left: 0;}*/
+.table-list td, .table-list th{text-align: center;}
+.table-list-border td, .table-list-border th{text-align: left;}
+.table-list-border .layui-form-item{margin-bottom: 0;}
+.span-reduce{
+	position: absolute;
+	right: 10px;top:5px;
+	width: 15px;height:15px;
+	border-radius: 50%;line-height: 15px;text-align: center;
+	border:1px solid gray;
+	cursor: pointer;
+	display: none;
+}
+.span-reduce-block{display: block;}
+.span-reduce i {
+    font-size: 14px;
+}
+.table-list td{position: relative;}
+#area-picker .layui-input-inline {
+    margin-right: 0;
+    /*width: 138px !important;*/
+    width: 125px !important;
+}
+#area-picker2 .layui-input-inline {
+    margin-right: 0;
+    width: 125px !important;
+}
+
+.step_a {
+    text-align: center;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.step_a a {
+    display: inline-block;
+    width: 210px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    background: #F60;
+    margin: 0 20px;
+    margin-top: 20px;
+}
+.layui-card-text .divparent{
+    
+}
+/*.qingtian{
+    height: 25px;
+    border:1px solid #D2D2D2!important;
+    padding-left: 10px;
+}*/
+.layui-input::-webkit-input-placeholder {
+  color: #b4b4b4;
+}
+
+.layui-input::-moz-placeholder {
+  color: #b4b4b4;
+}
+
+.layui-input:-ms-input-placeholder {
+  color: #b4b4b4;
+}
+.layui-item-fried {margin-bottom: 0;}
+.layui-item-fried .layui-input-inline {
+    margin-right: 0;
+    width: 137px !important;
+}
+.layui-card-bottom .layui-card-header{margin-bottom: 10px;}

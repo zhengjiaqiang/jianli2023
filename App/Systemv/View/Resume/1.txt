@@ -1,0 +1,131 @@
+<div class="oprsbtn highsearch" id="highsearch">
+			<div class="oprsbtn " >
+			<div class="widget-main">
+				<div class="row">
+					<div class="rowdiv">
+						<label class="labelonly">科室：</label>
+						<div class="label-right">
+							<select class="col-sm" name="dep">
+								<option value="">请选择科室</option>
+								<foreach name="dlist" item="v" key="k">
+									<option value="{$k}">{$v}</option>
+								</foreach>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">职位：</label>
+						<div class="label-right">
+							<select></select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">姓名：</label>
+						<div class="label-right">
+							<input name="wwhqywgur0" class="input-sm" type="text" id="name" placeholder="姓名">
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">性别：</label>
+						<div class="label-right">
+							<select name="xlb0ix53hv">
+								<option value="">请选择性别</option>
+								<option value="男">男</option>
+								<option value="女">女</option>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">毕业院校：</label>
+						<div class="label-right">
+							<input name="2g52le3ic04" class="input-sm" type="text" id="major" placeholder="专业">
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">专业：</label>
+						<div class="label-right">
+							<input name="ehmstvdz4p" class="input-sm" type="text" id="major" placeholder="专业">
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">政治面貌：</label>
+						<div class="label-right">
+							<select name="1mb0ylvappl">
+								<option value="0">请选择政治面貌</option>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly" class="labelonly">婚姻状况：</label>
+						<div class="label-right">
+							<select name="1hryxiw6t37">
+								<option value="">请选择婚姻状况</option>
+								<option value="已婚">已婚</option>
+								<option value="未婚">未婚</option>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">民族：</label>
+						<div class="label-right">
+							<select name="vpyfqb4s85">
+								<option value="">请选择民族</option>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">应届生：</label>
+						<div class="label-right">
+							<select name="2izv9jv98uk">
+								<option value=""></option>
+								<option value="应届生">应届生</option>
+								<option value="历届生">历届生</option>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">岗位调剂：</label>
+						<div class="label-right">
+							<select name="19payq4d2d8">
+								<option value=""></option>
+								<option value="可接受">可接受</option>
+								<option value="不接受">不接受</option>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">最高学历：</label>
+						<div class="label-right">
+							<select name="2ko4mh2lxhg">
+								<option value="">请选择最高学历</option>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">是否有亲属受雇于本院：</label>
+						<div class="label-right">
+							<select name="9nxxxr2odl">
+								<option value=""></option>
+								<option value="是">是</option>
+								<option value="否">否</option>
+							</select>
+						</div>
+					</div>
+					<div class="rowdiv">
+						<label class="labelonly">简历标签：</label>
+						<div class="label-right">
+							<select name="9nxxxr2odlbiaoqian">
+								<option value="全部">全部</option>
+								<option value="未标签">未标签</option>
+								<option value="已标签">已标签</option>
+							</select>
+						</div>
+					</div> 
+					<button type="button" class="btn btn-out"><i class="icon icon-search"></i> 导出</button>
+					<button type="submit" class="btn btn-info"><i class="icon icon-search"></i> 搜索</button>
+					<button type="reset" class="btn " role="reset" data-form='#search-form'><i class="icon icon-undo"></i> 重置</button>
+				</div>
+			</div>
+			</div>
+            
+        </div>

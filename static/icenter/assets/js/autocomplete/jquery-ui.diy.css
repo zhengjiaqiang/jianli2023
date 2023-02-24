@@ -1,0 +1,38 @@
+/* Overlays */
+.ui-widget-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.ui-autocomplete {
+	position: absolute;
+	top: 0;
+	left: 0;
+	cursor: default;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: block;
+	outline: 0;
+	position: absolute;
+    z-index: 9999;
+}
+.ui-autocomplete .ui-menu-item-wrapper{
+    line-height: 120%;
+    padding:7px;
+}
+.ui-autocomplete .ui-menu-item-wrapper:hover{
+    background: #6fb3e0;
+}
+.ui-helper-hidden-accessible {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}

@@ -1,0 +1,170 @@
+<?php
+// +----------------------------------------------------------------------
+// | I DO
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016 All rights reserved.
+// +----------------------------------------------------------------------
+// | Author: 雪地里的松鼠
+// +----------------------------------------------------------------------
+
+namespace Systemv\Controller;
+use Systemv\Common\BaseController;
+class IndexController extends BaseController{
+	private $isDebug =false;
+	public function index(){
+		$isDebug = true;
+		$html ='';
+		$bll = D('menu');
+		$where['status']=1;
+		$where['delete']=0;
+		$where['isdep']=$this->depId;
+		$list = $bll->where($where)->order('sort desc')->field('id,pid,depth,name,islink,link')->select();
+		//如果是默认的科室
+		// if($this->roleId == 4){
+		// 	$ulist=$bll->where(array('iskeshipower'=>1))->order('sort desc')->field('id,pid,depth,name')->select();
+		// 	$list=array_merge($list,$ulist);
+		// }
+		foreach($list as $v){
+			if($v['pid'] == 0){
+				$html .= $this->createNavLiHtml($list,$v);
+			}
+
+		}
+		$tem = $_COOKIE['theme_cookie'];
+		if(empty($tem)){
+			$tem = 'default-skin';
+		}
+	
+		$this->assign('theme',$tem);
+		$this->assign('navhtml',$html);
+		$this->assign('user',$this->userInfo);
+		//读取当前最后一天修改密码
+		
+		$this->display();
+	}
+	private function createNavLiHtml(&$list,&$loc){
+		$html = '';
+		foreach($list as $v){
+			if($v['pid'] == $loc['id']) $html .= $this->createNavLiHtml($list,$v);
+		}
+		if($html == ''){
+			if($this->checkMenu($loc['id'],$this->roleId) ){
+				$target='target="mainFrame"';
+				if($loc['pid'] != 0 && $loc['islink'] == 0 && empty($loc['link'])) $url='/Systemv/control/set/id/'.$loc['id'];
+				else if($loc['islink'] == 1 && !empty($loc['link'])){
+					$url=$loc['link'];$target='target="_blank"';
+				} 
+				else if($loc['pid'] == 0) $url='/Systemv/control/set/id/'.$loc['id'];
+				else $url=$loc['url'];
+				$tem = '<li><a href="';
+				$tem = $tem.$url.'" '.$target.'>';
+				if($loc['parent_id'] == 0){
+					if(! empty($loc['icon'])) $tem = $tem .'<i></i>';
+					else $tem = $tem .'<i></i>';
+				} else {
+					if(! empty($loc['icon'])) $tem = $tem .'<i></i>';
+					else $tem = $tem .'<i class="icon-double-angle-right"></i>';
+				}
+				$tem = $tem . '<span class="menu-text"> '.$loc['name'].' </span></a></li>';
+				$html =$tem;unset($tem);
+			}
+		}else{
+			$tem = '<li><a href="javascript:void(0);"  class="dropdown-toggle">';
+			if($loc['pid'] == 0){
+				if(! empty($loc['icon'])) $tem = $tem .'<i></i>';
+				else $tem = $tem .'<i></i>';
+			} else {
+				if(! empty($loc['icon'])) $tem = $tem .'<i></i>';
+					else $tem = $tem .'<i class="icon-double-angle-right"></i>';
+					
+			}
+			$html = $tem . '<span class="menu-text"> '.$loc['name'].' </span><b class="arrow icon-angle-down"></b></a>'
+				   .'<ul class="submenu">'. $html.'</ul></li>';
+		}
+		return $html;
+	}
+
+	public function main(){
+		$times=M('pwdhistroy')->where(array('uid'=>$this->userId))->getField('creatime');
+		if(empty($times)) 	$times=M('admin')->where(array('uid'=>$this->userId))->getField('addtime');
+		if(time()   - ($times+ 90 * 24 * 60 * 60) > 0 ) $this->assign('issign',true);
+		//查询简历数
+		$list=M('plan')->field('name,id')->where(['status'=>1,'isdel'=>0])->select();
+		$position=M('position');
+		$department=M('department');
+		$resumelist=M('resumelist');
+		$zhiweicount=['allcount'=>0,'endcount'=>0,'sendcount'=>0,'resumecount'=>0];
+		$resumecount=['allcount'=>0,'endcount'=>0,'sendcount'=>0,'resumecount'=>0];
+		foreach($list as $k=>$v){
+			$list[$k]['resumelist']=$list[$k]['list']=$department->field('name,id')->where(['status'=>1,'isdel'=>0])->select();
+			foreach($list[$k]['list'] as $key=>$val){
+				$zhiweicount['allcount']+=$list[$k]['list'][$key]['alling']=$position->where(['status'=>1,'isdel'=>0,'depid'=>$val['id'],'planid'=>$v['id']])->count();
+				$zhiweicount['endcount']+=$list[$k]['list'][$key]['ending']=$position->where(['status'=>1,'isdel'=>0,'depid'=>$val['id'],'planid'=>$v['id'],'etime'=>['LT',time()]])->count();
+				$zhiweicount['sendcount']+=$list[$k]['list'][$key]['sending']=$position->where(['status'=>1,'isdel'=>0,'depid'=>$val['id'],'planid'=>$v['id'],'btime'=>['elt',time()],'etime'=>['egt',time()]])->count();
+				$zhiweicount['resumecount']+=$list[$k]['list'][$key]['scale']=$resumelist->where(['p.status '=>1,'p.isdel'=>0,'p.planid'=>$v['id'],'dep.id'=>$val['id']])->join('as r left join  hh_position as p on r.rid = p.id left join hh_department as dep on p.depid=dep.id left join hh_plan as plan on plan.id = p.planid')->count();
+			}
+			foreach($list[$k]['resumelist'] as $key=>$val){
+				$resumecount['allcount']+=$list[$k]['resumelist'][$key]['alling']=$resumelist->where(['p.status '=>1,'p.isdel'=>0,'p.planid'=>$v['id'],'dep.id'=>$val['id']])->join('as r left join  hh_position as p on r.rid = p.id left join hh_department as dep on p.depid=dep.id left join hh_plan as plan on plan.id = p.planid')->count();
+				$resumecount['endcount']+=$list[$k]['resumelist'][$key]['resuming']=$resumelist->where(['p.status '=>1,'p.isdel'=>0,'p.planid'=>$v['id'],'dep.id'=>$val['id'],'r.status'=>5])->join('as r left join  hh_position as p on r.rid = p.id left join hh_department as dep on p.depid=dep.id left join hh_plan as plan on plan.id = p.planid')->count();
+				$resumecount['sendcount']+=$list[$k]['resumelist'][$key]['ing']=$resumelist->where(['p.status '=>1,'p.isdel'=>0,'p.planid'=>$v['id'],'dep.id'=>$val['id'],'r.status'=>6])->join('as r left join  hh_position as p on r.rid = p.id left join hh_department as dep on p.depid=dep.id left join hh_plan as plan on plan.id = p.planid')->count();
+				$resumecount['resumecount']+=$list[$k]['resumelist'][$key]['set']=$resumelist->where(['p.status '=>1,'p.isdel'=>0,'p.planid'=>$v['id'],'dep.id'=>$val['id'],'r.status'=>7])->join('as r left join  hh_position as p on r.rid = p.id left join hh_department as dep on p.depid=dep.id left join hh_plan as plan on plan.id = p.planid')->count();
+			}
+		}
+
+		$this->assign('zhiweicount',$zhiweicount);
+		$this->assign('resumecount',$resumecount);
+		$this->assign('zhiwei',$list);
+		$this->display();
+    }
+    public function dayArr(){
+		$type=I('get.type/d',1);
+		$days=$type ==1  ? getMonthDays(date('Y-m'),2) : ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+		$bll=M('resumelist');
+		$deplist=M('department')->field('id,name')->where(['status'=>1,'isdel'=>0])->select();
+		$all=[];
+		foreach($deplist as $key=>$val){
+			$data[$key]['name']=$val['name'];
+			$numbers=0;
+			foreach($days as $k=>$v){
+				$numbers+=$data[$key]['data'][$k]=(int)$bll->where(($type ==1 ? ['list.year'=>date('Y'),'list.month'=>date('m'),'list.day'=>$v,'pos.depid'=>$val['id']] : ['list.year'=>date('Y'),'list.month'=>($k+1),'pos.depid'=>$val['id']] ))->join('as list left join hh_position as pos on list.rid = pos.id left join hh_department as dep on pos.depid=dep.id and dep.status =1 and dep.isdel =0 ')->count();
+			}
+		}
+		$this->ajaxReturn(['day'=>$days,'data'=>$data,'text'=>($type == 1 ? '本月' : '本年度')]);
+	}
+	// public function dayArr(){
+	// 	$type=I('get.type/d',1);
+	// 	$days=$type ==1  ? getMonthDays(date('Y-m'),2) : ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+	// 	$bll=M('resumelist');
+	// 	$deplist=M('department')->field('id,name')->where(['status'=>1,'isdel'=>0])->select();
+	// 	$all=[];
+	// 	foreach($deplist as $key=>$val){
+	// 		$data[$key]['name']=$val['name'];
+	// 		$numbers=0;
+	// 		foreach($days as $k=>$v){
+	// 			$numbers+=$data[$key]['data'][$k]=(int)$bll->where(($type ==1 ? ['list.year'=>date('Y'),'list.month'=>date('m'),'list.day'=>$v,'pos.depid'=>$val['id']] : ['list.year'=>date('Y'),'list.month'=>($k+1),'pos.depid'=>$val['id']] ))->join('as list left join hh_position as pos on list.rid = pos.id left join hh_department as dep on pos.depid=dep.id and dep.status =1 and dep.isdel =0 ')->count();
+	// 		}
+	// 	}
+	// 	$this->ajaxReturn(['day'=>$days,'data'=>$data,'text'=>($type == 1 ? '本月' : '本年度')]);
+	// }
+	//重置所有数据
+	public function ResetData(){
+		//
+		if(isset($_GET['token'])){
+			M('rusercache')->where('1=1')->delete();
+			M('emaillist')->where('1=1')->delete();
+			M('emailuser')->where('1=1')->delete();
+			M('emailuserlist')->where('1=1')->delete();
+			M('logs')->where('1=1')->delete();
+			M('pwdhistroy')->where('1=1')->delete();
+			M('user')->where('1=1')->delete();
+			M('resumelist')->where('1=1')->delete();
+			M('resumestatus')->where('1=1')->delete();
+			M('resumeuser')->where('1=1')->delete();
+			M('uremusemessage')->where('1=1')->delete();
+			M('uremusemessagecache')->where('1=1')->delete();
+			//创建数据表
+			//
+			die('重置成功');
+		}
+	}
+}

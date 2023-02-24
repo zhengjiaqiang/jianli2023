@@ -1,0 +1,132 @@
+.layui-container,.table-list{width:100% !important;}
+.layui-form-label{
+    width:97px;padding:8px 10px;
+}
+.layui-card-header{margin-top: 20px;}
+.layui-form-select dl{max-height: 150px;}
+.table-list td,.table-list th{
+    border: 1px solid #c9cadd;
+    min-width: 35px;
+    height: 20px;
+    margin-top: 5px;
+    padding: 12px;
+}
+
+.span-reduce{
+    position: absolute;
+    right: 10px;top:5px;
+    width: 15px;height:15px;
+    border-radius: 50%;line-height: 15px;text-align: center;
+    border:1px solid gray;
+    cursor: pointer;
+    display: none;
+}
+.span-reduce-block{display: block;}
+.span-reduce i {
+    font-size: 14px;
+}
+.table-list td{position: relative;padding:5px;}
+.divparent{
+    padding: 0 12px;
+}
+.layui-span {
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin: 10px auto;
+    cursor: pointer;
+}
+.layui-span i {
+    font-size: 26px;
+}
+.layui-span2 {
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin: 10px auto;
+    cursor: pointer;
+}
+.layui-span2 i {
+    font-size: 26px;
+}
+.layui-input-block{
+    line-height: 36px;
+}
+.table-list-border p{
+    line-height: 30px;
+}
+.layui-form-item{margin-bottom: 0;}
+.layui-form-item2 .layui-form-label {
+    width: 230px;
+    text-align: left;
+}
+.layui-form-item2 .layui-input-block {
+    margin-left: 260px;
+}
+.layui-card-text{min-height: 40px;}
+.table-list-border{width: 870px !important;margin:0 auto;margin-top: 10px;}
+/*.people{display: none;}*/
+/*加载*/
+.fulldiv {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index:1; 
+    background-color:#FFF;
+}
+.personal-select .displayselect{
+    background-color: #ccc;
+}
+.layui-form-item2{
+    width: 870px;
+    /*width: 865px;*/
+    margin:0 auto;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+.layui-card-text{border: 1px solid #c9cadd;padding-top: 10px;box-sizing: border-box;}
+.remove-true{display: none;}
+.layui-card-header{
+    font-size: 17px;
+    font-family: Microsoft YaHei;
+    color: #ff6600;
+    font-weight: bold;
+    border-bottom: 2px solid;
+    width: 840px;
+    padding: 0;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 30px;
+}
+.layui-card-header:before{
+    content: '';
+    position: absolute;
+    top:19px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ff6600;
+}
+.details{margin-top: 0px;}
+.layui-form-label{
+    width: 122px;
+}
+.table-list-border .layui-form-label{
+    width: 97px;
+
+}
+#aupfile{cursor: auto;}
+
+.layui-form-item .layui-input-inline{width: 130px;}
+.layui-eq-card .layui-input-block{
+    margin-left: 130px;
+}
+.layui-eq-card table td p{
+    line-height: 30px;
+}

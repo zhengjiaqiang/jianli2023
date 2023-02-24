@@ -1,0 +1,86 @@
+<include file="Common:header"/>
+<script type="text/javascript"> 
+  $(document).ready(function(){
+	  $("#a1").click(function(){
+			$(this).toggleClass("shou");
+		    $("#anniu1").toggleClass("on");
+		});
+	  $("#a2").click(function(){
+			$(this).toggleClass("shou");
+		    $("#anniu2").toggleClass("on");
+		});
+  });
+</script>
+<body>
+	<header>
+	    <div class="header">
+	       
+	    </div>
+	</header>
+	<!--头部结束-->
+	<!-- <div class="banner" id="banner"></div> -->
+	<div id="content">
+		<div class="jslogin">
+			<div class="registertitle">
+				<h1>重置密码</h1>
+				<h2></h2>
+			</div>
+			<form  class="layui-form">
+			<div class="loginmain">
+				<div class="login_div" >
+					<label>输入密码</label>
+					<div class="login_user">
+						<input type="password" name="passwd" lay-verify="required|passwd" class="user" placeholder="请输入密码">
+					</div>
+				</div>
+				<div class="login_div " >
+					<label>确认密码</label>
+					<div class="login_user">
+						<input type="password" name="passwd2" lay-verify="required|confirmPass"  placeholder="请输入确认密码"/>
+					</div>
+				</div>
+				
+				<div class="login_div login_divone" >
+					<label></label>
+					<div class="login_user">
+						<a href="javascript:;" lay-submit lay-filter="resetpwd" class="login">确 定</a>
+					</div>
+				</div>
+			</div></form>
+		</div>
+	</div>
+	<div class="tc experience" style="display: block;">为了获得更好的用户体验，请在电脑端使用火狐、谷歌、 浏览器填写简历。<em class="close"></em></div>
+	<footer> </footer>
+	<script src="/static/layui/layui.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			layui.use(['layer','form'], function(){
+				var form = layui.form,layer=layui.layer;
+				form.verify({
+					confirmPass:function(value){
+						if($('input[name=passwd]').val() !== value)
+							return '两次密码输入不一致！';
+					},
+					passwd:[/^[\S]{6,12}$/,'密码必须6到12位，且不能出现空格']
+				});
+				form.on('submit(resetpwd)', function(data){
+					$.post('/user/login/resetpwd',data.field,function(_data){
+						if(_data.status == 1){
+							layer.msg(_data.info,{shift:-1,time:2000,icon:1},function(){
+								location.href="/icenter/index/";
+							});
+						}else{
+							layer.alert(_data.info,{
+								title:'修改失败错误信息',
+								icon:2
+							});
+						}
+						return false;
+					},'JSON');
+					return false;
+				});
+			});
+		})
+	</script>
+</body>
+</html>
